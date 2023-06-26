@@ -72,3 +72,146 @@ p {
 ul {
     list-style: none;
 }
+
+input {
+    padding: 1rem;
+}
+
+.btn {
+    padding: 1rem;
+    text-transform: uppercase;
+    color: white;
+    display: flex;
+    justify-content: center;
+}
+
+
+.btn-rojo {
+    background-color: red;
+}
+
+.btn-verde {
+    background-color: green;
+}
+
+.btn-azul {
+    background-color: blue;
+}
+
+section {
+    padding: 1rem;
+}
+
+
+.nueva-nota-contenedor {
+    background-color: rgb(139, 0, 76);
+}
+
+
+/* Nueva Nota Form */
+
+#nueva-nota-form {
+ 
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 2rem;
+}
+
+
+
+.titulo-descripcion-contenedor {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    flex-basis: 50%;
+    padding: 1rem;
+    height: 30rem;
+}
+
+.titulo-descripcion-contenedor label {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    
+
+}
+
+.titulo-descripcion-contenedor label input {
+    width: 90%;
+   
+}
+
+.titulo-descripcion-contenedor textarea {
+    padding: 1rem;
+    width: 90%;
+    height: 20rem;
+    margin: 0;
+    border: none;
+}
+
+
+.botones-form-contenedor {
+    height: 30rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+
+    flex-basis: 50%;
+   
+}
+
+
+/* filtro notas */
+
+#buscar-notas {
+    height: 20rem;
+    
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+#checkRealizadas {
+    margin-right: 1rem;
+}
+
+
+/* Color de fondo notas */
+
+.sinCompletar {
+    background-color: rgb(247, 96, 96);
+}
+
+.completa {
+    background-color: rgb(22, 201, 22);
+}
+
+
+
+/* Notas guardadas */
+
+.notas-guardadas-contenedor {
+
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.nota-guardada {
+    height: 30rem;
+    flex-basis: calc(25% - 2rem);
+    margin: 2rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    
+}
+
+.nota-guardada-label input {
+    margin-left: 1rem;
+}

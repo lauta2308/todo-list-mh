@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To do list MH</title>
+    <link rel="stylesheet" href="./normalize.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans|PT+Sans:400,700" rel="stylesheet">
     <link rel="stylesheet" href="./styles.css">
 </head>
@@ -22,8 +23,8 @@
                 </div>
     
                 <div class="botones-form-contenedor">
-                    <button type="submit" class="guardar-btn" id="guardar-nota">Guardar</button>
-                    <button class="cancelar-btn" id="resetear-form-btn">Borrar</button>
+                    <button class="btn-verde btn" type="submit" class="guardar-btn" id="guardar-nota">Guardar</button>
+                    <button class="btn-rojo btn" id="resetear-form-btn">Resetear</button>
                 </div>
              
     
@@ -40,9 +41,11 @@
         <label>
             <input type="checkbox" id="checkRealizadas">Realizadas
         </label>
-        <button type="submit" id="btn-buscar">Buscar</button>
+        <button type="submit" id="btn-buscar" class="btn btn-azul">Buscar</button>
+
+  
     </form>
-        </section>
+</section>
 
 
         <section class="contenedor">
@@ -50,13 +53,7 @@
 
             <div class="notas-guardadas-contenedor contenedor" id="notas-guardadas-contenedor">
 
-                <div class="nota-guardada">
-                    <label>
-                        <input type="checkbox">Titulo
-                    </label>
-                    <p class="nota-guardada-descripcion">Descripción</p>
-                    <button>Borrar nota</button>
-                </div>
+               
             </div>
         </section>
    

@@ -11,14 +11,16 @@ checkLocal();
 function checkLocal(){
     if(localStorage.getItem("notas-guardadas")){
         notasGuardadas= JSON.parse(localStorage.getItem("notas-guardadas"));
+        
     } else {
+       
         notasGuardadas = []
     }
     
 }
 
 
-console.log(notasGuardadas);
+
 
 
 // Elementos HTML para crear una nota
@@ -29,7 +31,7 @@ const nuevaNotaDescripcion = document.getElementById("nueva-nota-descripcion");
 const nuevaNotaGuardarBtn = document.getElementById("guardar-nota");
 const resetearFormNotaBtn = document.getElementById("resetear-form-btn")
 
-console.log(nuevaNotaTitulo.value);
+
 
 
 
@@ -37,10 +39,16 @@ console.log(nuevaNotaTitulo.value);
 
 nuevaNotaGuardarBtn.addEventListener("click", function(e){
 
-    
+    e.preventDefault();
+    if(notasGuardadas.length === 0){
+        elementId = 1;
+    } else {
+        elementId  = notasGuardadas[notasGuardadas.length - 1].id + 1;
+    }
+  
 
     let nuevaNota = {
-        id: notasGuardadas.length +1,
+        id: elementId,
         titulo: nuevaNotaTitulo.value,
         descripcion: nuevaNotaDescripcion.value,
         realizada: false
@@ -48,12 +56,15 @@ nuevaNotaGuardarBtn.addEventListener("click", function(e){
 
     notasGuardadas.push(nuevaNota);
 
-
+    nuevaNotaTitulo.value = "";
+    nuevaNotaDescripcion.value = "";
     // Guardar nota en local storage
 
     localStorage.setItem("notas-guardadas", JSON.stringify(notasGuardadas));
+    notasGuardadas = JSON.parse(localStorage.getItem("notas-guardadas"));
+    
+    imprimir(notasGuardadas);
 
-    console.log(notasGuardadas);
 
 })
 
@@ -77,15 +88,21 @@ const notasGuardadasHtml = document.getElementById("notas-guardadas-contenedor")
 
 // Agregar evento al boton buscar
 
+inputBuscar.addEventListener("keyup", function(e){
+    e.preventDefault();
+  
+    filtrarNotas();
+})
+
 btnBuscar.addEventListener("click", function(e){
     e.preventDefault();
-    notasGuardadasHtml.replaceChildren();
+   
     filtrarNotas();
 })
 
 checkRealizadas.addEventListener("change", function(e){
     e.preventDefault();
-    notasGuardadasHtml.replaceChildren();
+   
     filtrarNotas();
 });
 
@@ -95,19 +112,20 @@ filtrarNotas();
 function filtrarNotas(){
     let arregloAImprimir;
 
+   
     // buscar sin valor y check sin marcar
     if(inputBuscar.value === "" && !checkRealizadas.checked){
         arregloAImprimir = notasGuardadas;
-        console.log("ingreso");
+   
         imprimir(arregloAImprimir);
        
     } 
     
     else if(inputBuscar.value !== "" && !checkRealizadas.checked){
-        console.log("ingreso");
-        console.log(notasGuardadas);
+
         arregloAImprimir = notasGuardadas.filter(notas => 
-            notas.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()));
+            notas.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()) ||
+            notas.descripcion.toLowerCase().includes(inputBuscar.value.toLowerCase()));
            
             imprimir(arregloAImprimir);
 
@@ -117,13 +135,13 @@ function filtrarNotas(){
     //buscar sin valor y check marcado
     else if(inputBuscar.value == "" && checkRealizadas.checked){
         arregloAImprimir = notasGuardadas.filter(notas => notas.realizada === true);
-        console.log("ingreso");
+     
         imprimir(arregloAImprimir);
     }
       // buscar con valor y check marcado
     else {
-        arregloAImprimir = notasGuardadas.filter(notas => notas.realizada === true && notas.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()));
-        console.log("ingreso");
+        arregloAImprimir = notasGuardadas.filter(notas => notas.realizada === true && (notas.titulo.toLowerCase().includes(inputBuscar.value.toLowerCase()) || notas.descripcion.toLowerCase().includes(inputBuscar.value.toLowerCase())));
+  
         imprimir(arregloAImprimir);
     }
 }
@@ -137,17 +155,24 @@ function filtrarNotas(){
 // Imprimir notas guardadas
 
 function imprimir(arregloAImprimir){
-    console.log(arregloAImprimir);
+    notasGuardadasHtml.replaceChildren();
+
     arregloAImprimir.forEach(element => {
 
         let notaGuardadaDiv = document.createElement("div");
         notaGuardadaDiv.classList.add("nota-guardada");
         notaGuardadaDiv.setAttribute("id", element.id);
-        console.log(element);
+  
         
-    
+        let tituloNota = document.createElement("h3");
+
+        tituloNota.innerText = element.titulo;
+        
         let label = document.createElement("label");
-        label.innerText = element.titulo;
+        label.classList.add("nota-guardada-label")
+
+
+       
         let inputCheck = document.createElement("input");
         inputCheck.type = "checkbox";
         inputCheck.classList.add(element.id);
@@ -155,9 +180,13 @@ function imprimir(arregloAImprimir){
         label.appendChild(inputCheck);
     
         if(element.realizada){
+            label.innerText = "Hecha";
             inputCheck.checked = true;
+            notaGuardadaDiv.classList.add("completa");
         } else {
+            label.innerText = "Pendiente";
             inputCheck.checked = false;
+            notaGuardadaDiv.classList.add("sinCompletar");
         }
     
         inputCheck.addEventListener("change", cambiarEstadoDeNota)
@@ -172,9 +201,11 @@ function imprimir(arregloAImprimir){
         let borrarNotaBtn = document.createElement("button");
         borrarNotaBtn.innerText = "Borrar nota";
         borrarNotaBtn.classList.add(element.id);
+        borrarNotaBtn.classList.add("btn");
+        borrarNotaBtn.classList.add("btn-rojo");
         borrarNotaBtn.addEventListener("click", borrarNota)
     
-    
+        notaGuardadaDiv.appendChild(tituloNota);
         notaGuardadaDiv.appendChild(label);
         notaGuardadaDiv.appendChild(descripcionNota);
         notaGuardadaDiv.appendChild(borrarNotaBtn);
@@ -190,8 +221,7 @@ function imprimir(arregloAImprimir){
 
 
 function cambiarEstadoDeNota(event){
-    console.log(event.target.className)
-    console.log(notasGuardadas);
+
     let buscarNota = notasGuardadas.find(e => e.id == event.target.className);
     
 
@@ -202,12 +232,18 @@ function cambiarEstadoDeNota(event){
     }
 
     localStorage.setItem("notas-guardadas", JSON.stringify(notasGuardadas));
-    location.reload()
+    notasGuardadas = JSON.parse(localStorage.getItem("notas-guardadas"));
+    
+    imprimir(notasGuardadas);
+    
 }
 
 
 function borrarNota(event){
-    notasGuardadas = notasGuardadas.filter(notas => notas.id != event.target.className);
+    
+    notasGuardadas = notasGuardadas.filter(notas => notas.id != event.target.classList[0]);
     localStorage.setItem("notas-guardadas", JSON.stringify(notasGuardadas));
-    location.reload();
+    notasGuardadas = JSON.parse(localStorage.getItem("notas-guardadas"));
+    
+    imprimir(notasGuardadas);
 }
