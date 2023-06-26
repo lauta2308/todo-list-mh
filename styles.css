@@ -1,0 +1,74 @@
+/* GLOBALES */
+
+html {
+    font-size: 62.5%;
+    box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-size: 1.6rem;
+    box-sizing: inherit;
+    font-family: 'Open Sans', sans-serif;
+    color: white;
+    background-color: black;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+header,
+main,
+footer {
+    margin: 0 auto;
+    width: 100%;
+    max-width: 1200px;
+}
+
+section {
+    margin: 2rem;
+}
+
+img {
+    max-width: 100%;
+}
+
+h1, h2, h3, h4 {
+    font-family: 'PT Sans', sans-serif;
+}
+
+h1 {
+    font-size: 4.2rem;
+}
+
+h2 {
+    font-size: 3.8rem;
+}
+
+h3 {
+    font-size: 3.6rem;
+}
+
+h4 {
+    font-size: 3.4rem;
+}
+
+a {
+    font-size: 2rem;
+}
+
+p {
+    margin-bottom: 1rem;
+    line-height: 2;
+}
+
+ul {
+    list-style: none;
+}
